@@ -50,9 +50,16 @@ def load_trade_goods(path: str) -> List[Dict[str, Any]]:
             * ``tooltip_html`` (str): placeholder for a tooltip; left
               empty because tooltips are not present in the snapshot.
     """
+    # Check that the file exists before attempting to open it.  We
+    # deliberately raise a FileNotFoundError here so callers can
+    # handle the error gracefully or log a helpful message.  Using
+    # os.path.isfile() allows both relative and absolute paths.
     if not os.path.isfile(path):
         raise FileNotFoundError(f"Trade goods HTML file not found: {path}")
 
+    # Read the entire HTML content into memory.  If the file is
+    # extremely large this could be memory intensive, but the
+    # Turtle‑WoW item pages are well within reasonable limits.
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         content = f.read()
 
@@ -127,3 +134,49 @@ def load_trade_goods(path: str) -> List[Dict[str, Any]]:
         )
 
     return items
+
+# ---------------------------------------------------------------------------
+# Command‑line interface
+#
+# When run directly (e.g. ``python import_items.py``), this module will
+# attempt to load the trade goods from a specified HTML file and print
+# summary information.  Use this to test the importer and diagnose
+# problems with missing files or parsing errors.  Logging messages
+# provide feedback on success or failure.
+
+if __name__ == "__main__":
+    import argparse
+    import logging
+    # Configure a basic logger.  When imported as a module this
+    # configuration has no effect because __main__ is not executed.
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+    )
+    parser = argparse.ArgumentParser(
+        description="Load Turtle‑WoW trade goods from an HTML snapshot."
+    )
+    parser.add_argument(
+        "path",
+        nargs="?",
+        default="data/trade_goods.html",
+        help="Path to the saved trade_goods.html file (default: data/trade_goods.html)",
+    )
+    args = parser.parse_args()
+    path = args.path
+    try:
+        items = load_trade_goods(path)
+        logging.info(
+            "Successfully loaded %d items from %s", len(items), path
+        )
+        # Print the first few items for quick verification at debug level.
+        for itm in items[:10]:
+            logging.debug("%5d  %s", itm["item_id"], itm["name"])
+    except FileNotFoundError as fnfe:
+        logging.error(fnfe)
+        logging.info(
+            "Ensure the HTML snapshot exists at the specified path. "
+            "If not, download the page and save it there."
+        )
+    except Exception as ex:
+        logging.error("Unexpected error while loading trade goods: %s", ex)
