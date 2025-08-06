@@ -1,0 +1,24 @@
+2025-08-06 10:34:03 ERROR TradeGoodsScraper: PostgreSQL connection failed: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Falling back to SQLite.
+2025-08-06 10:34:03 INFO TradeGoodsScraper: Connected to SQLite database at sqlite:///guild_union.db.
+2025-08-06 10:34:03 INFO TradeGoodsScraper: Guild Union script starting up...
+2025-08-06 10:34:03 INFO TradeGoodsScraper: Starting item import from HTML snapshot...
+2025-08-06 10:34:03 ERROR TradeGoodsScraper: Failed to load trade goods from HTML: Trade goods HTML file not found: data\trade_goods.html
+2025-08-06 10:34:03 INFO TradeGoodsScraper: Starting price update...
+2025-08-06 10:34:25 ERROR TradeGoodsScraper: PostgreSQL connection failed: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Falling back to SQLite.
+2025-08-06 10:34:25 INFO TradeGoodsScraper: Connected to SQLite database at sqlite:///guild_union.db.
+2025-08-06 10:34:25 INFO TradeGoodsScraper: Guild Union script starting up...
+2025-08-06 10:34:25 INFO TradeGoodsScraper: Starting item import from HTML snapshot...
+2025-08-06 10:34:25 ERROR TradeGoodsScraper: Failed to load trade goods from HTML: Trade goods HTML file not found: data\trade_goods.html
+2025-08-06 10:34:25 INFO TradeGoodsScraper: Starting price update...
